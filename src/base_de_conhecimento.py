@@ -1,6 +1,8 @@
 import json
 import os
+import re
 import sys
+import unicodedata
 
 from config import CHAMADOS_ENVIADOS_PATH
 
@@ -25,23 +27,33 @@ def carregar_base_de_conhecimento():
         return json.load(file)["conhecimentos"]
 
 
-def buscar_coincidencias(chamado, base_conhecimento):
+def normalize(text: str) -> str:
+    text = unicodedata.normalize("NFKD", text)
+    text = "".join(ch for ch in text if not unicodedata.combining(ch))
+    text = text.lower()
+    text = re.sub(r"[^a-z0-9\s]", " ", text)
+    text = re.sub(r"\s+", " ", text).strip()
+    return text
+
+
+def buscar_coincidencias(chamado: str, base_conhecimento: list) -> list:
     """
-    Busca coincidências entre o chamado e a base de conhecimento.
-
-    Args:
-        chamado (str): Texto do chamado.
-        base_conhecimento (list): Base de conhecimento a ser comparada.
-
-    Returns:
-        list: Lista de resultados ordenada por número de coincidências.
+    Busca coincidências entre o chamado e a base de conhecimento,
+    removendo acentos e pontuação, e casando palavras inteiras.
     """
     resultados = []
-    chamado_lower = chamado.lower()
+    norm_chamado = normalize(chamado)
+
     for item in base_conhecimento:
-        coincidencias = sum(
-            1 for palavra in item["palavras_chave"] if palavra in chamado_lower
-        )
+        norm_palavras = [normalize(p) for p in item["palavras_chave"]]
+        coincidencias = 0
+
+        for p in norm_palavras:
+            # regex \b para palavra inteira
+            if re.search(rf"\b{re.escape(p)}\b", norm_chamado):
+                coincidencias += 1
+
+        # exige pelo menos 2 keywords diferentes
         if coincidencias > 1:
             resultados.append(
                 {
@@ -50,6 +62,8 @@ def buscar_coincidencias(chamado, base_conhecimento):
                     "coincidencias": coincidencias,
                 }
             )
+
+    # ordena quem teve mais coincidências no topo
     return sorted(resultados, key=lambda x: x["coincidencias"], reverse=True)
 
 

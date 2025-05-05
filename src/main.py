@@ -10,8 +10,16 @@ if __name__ == "__main__":
 
     try:
         while True:
-            if not driver or not sessao_esta_ativa(driver):
-                print("🔄 Sessão expirada ou driver não iniciado. Reautenticando...")
+            try:
+                if not driver or not sessao_esta_ativa(driver):
+                    print(
+                        "🔄 Sessão expirada ou driver não iniciado. Reautenticando..."
+                    )
+                    if driver:
+                        driver.quit()
+                    driver = iniciar_driver_e_logar_no_glpi()
+            except Exception as e:
+                print(f"⚠️ Erro ao verificar a sessão: {e}")
                 if driver:
                     driver.quit()
                 driver = iniciar_driver_e_logar_no_glpi()

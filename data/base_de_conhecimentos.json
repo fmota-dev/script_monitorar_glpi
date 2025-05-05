@@ -6,9 +6,15 @@
       "palavras_chave": ["liberação", "unidade operativa", "sig"]
     },
     {
-      "titulo": "#208 FECHADURA ELETRÔNICA NÃO FUNCIONA",
-      "categoria": "Hardware > Perifericos",
-      "palavras_chave": ["fechadura", "não funciona"]
+      "titulo": "Conferência Pedagógica | ABRIL 2025",
+      "categoria": "sistemas > sig > producao",
+      "palavras_chave": [
+        "sig",
+        "unidade operativa",
+        "producao",
+        "conferencia",
+        "pedagogica"
+      ]
     },
     {
       "titulo": "Acesso ao MXM",
@@ -59,7 +65,7 @@
     {
       "titulo": "Erro ao acessar o módulo financeiro no SIG",
       "categoria": "sistemas > sig > financeiro",
-      "palavras_chave": ["erro", "acessar", "módulo", "financeiro", "sig"]
+      "palavras_chave": ["acessar", "módulo", "permissao"]
     },
     {
       "titulo": "Solicitação de permissão ao MXM",
