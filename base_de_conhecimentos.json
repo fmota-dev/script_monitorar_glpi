@@ -1,0 +1,95 @@
+{
+  "conhecimentos": [
+    {
+      "titulo": "Liberação de unidade Operativa SIG",
+      "categoria": "sistemas > sig > liberação uo",
+      "palavras_chave": ["liberação", "unidade operativa", "sig"]
+    },
+    {
+      "titulo": "#208 FECHADURA ELETRÔNICA NÃO FUNCIONA",
+      "categoria": "Hardware > Perifericos",
+      "palavras_chave": ["fechadura", "não funciona"]
+    },
+    {
+      "titulo": "Acesso ao MXM",
+      "categoria": "sistemas > mxm > permissões",
+      "palavras_chave": ["acesso", "mxm", "permissões"]
+    },
+    {
+      "titulo": "Criação de usuário no sistema SIG",
+      "categoria": "sistemas > sig > criação de usuário",
+      "palavras_chave": ["criação de usuário", "sig"]
+    },
+    {
+      "titulo": "Problema na Visualização de Requisições no MXM",
+      "categoria": "sistemas > mxm > outros",
+      "palavras_chave": ["visualização", "requisições", "mxm"]
+    },
+    {
+      "titulo": "Instabilidade no Fluig",
+      "categoria": "sistemas > fluig > permissão",
+      "palavras_chave": ["instabilidade", "fluig"]
+    },
+    {
+      "titulo": "Liberar Acesso",
+      "categoria": "sistemas > sig > outros",
+      "palavras_chave": ["liberar acesso", "sig"]
+    },
+    {
+      "titulo": "Liberação perfil de acesso",
+      "categoria": "sistemas > mxm > contabilidade",
+      "palavras_chave": ["liberação perfil", "acesso", "mxm", "contabilidade"]
+    },
+    {
+      "titulo": "Acesso perfil módulo estoque",
+      "categoria": "sistemas > mxm > estoque",
+      "palavras_chave": ["acesso perfil", "estoque", "mxm"]
+    },
+    {
+      "titulo": "Movimentação de Documentos - Fluig",
+      "categoria": "sistemas > fluig > permissão",
+      "palavras_chave": ["movimentação", "documentos", "fluig"]
+    },
+    {
+      "titulo": "Não consegue fazer upload p/ Fluig GED",
+      "categoria": "sistemas > fluig > permissão",
+      "palavras_chave": ["upload", "fluig", "ged"]
+    },
+
+    {
+      "titulo": "Erro ao acessar o módulo financeiro no SIG",
+      "categoria": "sistemas > sig > financeiro",
+      "palavras_chave": ["erro", "acessar", "módulo", "financeiro", "sig"]
+    },
+    {
+      "titulo": "Solicitação de permissão ao MXM",
+      "categoria": "sistemas > mxm > permissões",
+      "palavras_chave": ["solicitação", "permissão", "mxm"]
+    },
+    {
+      "titulo": "Problema no carregamento de documentos Fluig",
+      "categoria": "sistemas > fluig > permissão",
+      "palavras_chave": ["problema", "carregamento", "documentos", "fluig"]
+    },
+    {
+      "titulo": "Acesso negado ao módulo estoque MXM",
+      "categoria": "sistemas > mxm > estoque",
+      "palavras_chave": ["acesso", "negado", "módulo", "estoque", "mxm"]
+    },
+    {
+      "titulo": "Falha no envio de anexos pelo Fluig",
+      "categoria": "sistemas > fluig > permissão",
+      "palavras_chave": ["falha", "envio", "anexos", "fluig"]
+    },
+    {
+      "titulo": "Instabilidade recorrente no sistema SIG",
+      "categoria": "sistemas > sig > outros",
+      "palavras_chave": ["instabilidade", "recorrente", "sistema", "sig"]
+    },
+    {
+      "titulo": "Usuário sem acesso ao módulo contábil MXM",
+      "categoria": "sistemas > mxm > contabilidade",
+      "palavras_chave": ["usuário", "acesso", "módulo", "contábil", "mxm"]
+    }
+  ]
+}
