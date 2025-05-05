@@ -5,7 +5,9 @@ import sys
 import time
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from typing import Optional
 
+from dotenv import load_dotenv
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.edge.options import Options
@@ -13,9 +15,25 @@ from selenium.webdriver.edge.service import Service
 
 EDGE_DRIVER_PATH = r"C:\edgedriver_win64\msedgedriver.exe"
 
-# Suas credenciais de e-mail
-GMAIL_USER = "flp.senac.rn@gmail.com"  # Coloque seu e-mail do Gmail
-GMAIL_PASSWORD = "bmtj jzky kjrb tzrv"  # A senha de aplicativo ou senha do Gmail (recomendada para segurança)
+load_dotenv()
+
+
+# Função para obter variáveis de ambiente e garantir que não sejam None
+def get_env_var(var_name: str) -> str:
+    value: Optional[str] = os.getenv(var_name)
+    if value is None or value.strip() == "":
+        raise ValueError(
+            f"⚠️ Erro: A variável de ambiente '{var_name}' não está definida ou está vazia no arquivo .env."
+        )
+    return value
+
+
+# Definição segura das variáveis
+GMAIL_USER = get_env_var("GMAIL_USER")
+GMAIL_PASSWORD = get_env_var("GMAIL_PASSWORD")
+DESTINATARIO = get_env_var("DESTINATARIO")
+GLPI_USER = get_env_var("GLPI_USER")
+GLPI_PASS = get_env_var("GLPI_PASS")
 
 # Caminho para o arquivo que armazenará os chamados enviados
 CHAMADOS_ENVIADOS_PATH = "chamados_enviados.json"
@@ -84,14 +102,14 @@ def enviar_email(titulo_chamado, link_chamado):
 
         msg = MIMEMultipart()
         msg["From"] = GMAIL_USER
-        msg["To"] = "flp.motasl@gmail.com"  # Substitua pelo e-mail de destino
+        msg["To"] = DESTINATARIO
         msg["Subject"] = subject
         msg.attach(MIMEText(body, "plain"))
 
         # Enviando o e-mail
         with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
             server.login(GMAIL_USER, GMAIL_PASSWORD)
-            server.sendmail(GMAIL_USER, "flp.motasl@gmail.com", msg.as_string())
+            server.sendmail(GMAIL_USER, DESTINATARIO, msg.as_string())
 
         print("✅ E-mail enviado com sucesso.")
     except Exception as e:
@@ -115,8 +133,8 @@ def abrir_glpi_e_extrair_titulos():
     usuario = driver.find_element(By.ID, "login_name")
     senha = driver.find_element(By.ID, "login_password")
 
-    usuario.send_keys("f4179")
-    senha.send_keys("pqplol852@F1.")
+    usuario.send_keys(GLPI_USER)
+    senha.send_keys(GLPI_PASS)
     senha.submit()
 
     time.sleep(5)
