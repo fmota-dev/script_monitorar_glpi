@@ -5,10 +5,14 @@ description = ""
 authors = [{ name = "@fmota-dev", email = "fmota.web@gmail.com" }]
 readme = "README.md"
 requires-python = ">=3.13"
-dependencies = ["pyautogui (>=0.9.54,<0.10.0)", "selenium (>=4.32.0,<5.0.0)", "twilio (>=9.5.2,<10.0.0)", "python-dotenv (>=1.1.0,<2.0.0)"]
+dependencies = [
+    "pyautogui (>=0.9.54,<0.10.0)",
+    "selenium (>=4.32.0,<5.0.0)",
+    "python-dotenv (>=1.1.0,<2.0.0)",
+]
 
 [tool.poetry]
-packages = [{ include = "glpi_scraper", from = "src" }]
+package-mode = false
 
 
 [build-system]
