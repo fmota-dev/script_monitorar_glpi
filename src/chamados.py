@@ -33,7 +33,9 @@ def coletar_textos_e_imagens(container):
     )
     imagens = [
         img.get_attribute("src")
-        for img in container.find_elements(By.CSS_SELECTOR, 'div[class^="pswp-img"] img')
+        for img in container.find_elements(
+            By.CSS_SELECTOR, 'div[class^="pswp-img"] img'
+        )
     ]
     return descricao, imagens
 
@@ -69,7 +71,9 @@ def baixar_imagens(imagens, pasta_destino, driver):
     return caminhos
 
 
-def extrair_detalhes_chamado(driver, url, baixar_imagens_flag=False, pasta_destino=None):
+def extrair_detalhes_chamado(
+    driver, url, baixar_imagens_flag=False, pasta_destino=None
+):
     """Extrai detalhes do chamado, incluindo descrição e imagens."""
     driver.get(url)
     time.sleep(2)
@@ -93,7 +97,11 @@ def extrair_detalhes_chamado(driver, url, baixar_imagens_flag=False, pasta_desti
         return "(Erro na extração)", [], False
 
     if baixar_imagens and imagens and pasta_destino:
-        imagens = baixar_imagens(imagens, pasta_destino, driver) if baixar_imagens_flag else imagens
+        imagens = (
+            baixar_imagens(imagens, pasta_destino, driver)
+            if baixar_imagens_flag
+            else imagens
+        )
 
     return descricao.strip(), imagens, False
 
@@ -119,12 +127,16 @@ def coletar_chamados(driver):
     return chamados
 
 
-def processar_chamado(driver, chamado, base_conhecimento, processados):
+def verificar_e_enviar_chamado(driver, chamado, base_conhecimento, processados):
     """Processa um único chamado, verificando coincidências e enviando e-mail."""
     print(f"\n🔎 Verificando chamado: {chamado['titulo']} (ID {chamado['id']})")
 
     resultados = buscar_coincidencias(chamado["titulo"], base_conhecimento)
-    if not resultados or chamado["id"] in CHAMADOS_ENVIADOS or chamado["id"] in processados:
+    if (
+        not resultados
+        or chamado["id"] in CHAMADOS_ENVIADOS
+        or chamado["id"] in processados
+    ):
         return False
 
     with tempfile.TemporaryDirectory() as pasta_temp:
@@ -143,13 +155,15 @@ def processar_chamado(driver, chamado, base_conhecimento, processados):
         for idx, img in enumerate(imagens, 1):
             print(f"      {idx}. {img}")
 
-        enviar_email(chamado["titulo"], chamado["link"], descricao, imagens, chamado["id"])
+        enviar_email(
+            chamado["titulo"], chamado["link"], descricao, imagens, chamado["id"]
+        )
 
     processados.add(chamado["id"])
     return True
 
 
-def extrair_titulos_e_processar(driver, base_conhecimento):
+def gerenciar_chamados(driver, base_conhecimento):
     """Extrai títulos e categorias dos chamados, processa e envia e-mails."""
     chamados = coletar_chamados(driver)
     processados = set()
@@ -157,7 +171,7 @@ def extrair_titulos_e_processar(driver, base_conhecimento):
 
     for chamado in chamados:
         verificados += 1
-        if processar_chamado(driver, chamado, base_conhecimento, processados):
+        if verificar_e_enviar_chamado(driver, chamado, base_conhecimento, processados):
             enviados_sucesso += 1
         else:
             nao_enviados += 1
@@ -168,4 +182,6 @@ def extrair_titulos_e_processar(driver, base_conhecimento):
     print(f"\n✅ Resumo da execução:")
     print(f"   - Chamados verificados: {verificados}")
     print(f"   - Chamados enviados: {enviados_sucesso}")
-    print(f"   - Chamados já enviados anteriormente: {len(CHAMADOS_ENVIADOS) - enviados_sucesso}")
+    print(
+        f"   - Chamados já enviados anteriormente: {len(CHAMADOS_ENVIADOS) - enviados_sucesso}"
+    )

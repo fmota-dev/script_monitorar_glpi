@@ -11,7 +11,7 @@ def enviar_email(titulo_chamado, link_chamado, descricao, imagens, id_chamado):
     Envia um e‑mail com os detalhes de um chamado, mantendo a formatação original
     da descrição, incluindo linhas em branco.
     """
-    subject = f"🚨 Alerta GLPI - Chamado #{id_chamado}"
+    subject = f"🚨 Alerta GLPI"
 
     # Formata a descrição para HTML, preservando as quebras de linha originais
     paragrafos_html = descricao.replace("\n", "<br>")

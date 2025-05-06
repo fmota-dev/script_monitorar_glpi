@@ -1,7 +1,7 @@
 import time
 
 from base_de_conhecimento import carregar_base_de_conhecimento
-from chamados import extrair_titulos_e_processar
+from chamados import gerenciar_chamados
 from glpi import iniciar_driver_e_logar_no_glpi, sessao_esta_ativa
 
 if __name__ == "__main__":
@@ -25,7 +25,7 @@ if __name__ == "__main__":
                 driver = iniciar_driver_e_logar_no_glpi()
 
             if driver:
-                extrair_titulos_e_processar(driver, base_conhecimento)
+                gerenciar_chamados(driver, base_conhecimento)
             else:
                 print("❌ Falha ao iniciar ou restaurar a sessão.")
 
