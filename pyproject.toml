@@ -1,5 +1,5 @@
 [project]
-name = "glpi-scraper"
+name = "glpi-monitor"
 version = "0.1.0"
 description = ""
 authors = [{ name = "@fmota-dev", email = "fmota.web@gmail.com" }]
