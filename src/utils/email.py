@@ -1,3 +1,4 @@
+import os
 import smtplib
 from email.mime.image import MIMEImage
 from email.mime.multipart import MIMEMultipart
@@ -16,33 +17,29 @@ def enviar_email(titulo_chamado, link_chamado, descricao, imagens, id_chamado):
     # Formata a descrição para HTML, preservando as quebras de linha originais
     paragrafos_html = descricao.replace("\n", "<br>")
 
+    caminho_template = os.path.join(os.path.dirname(__file__), "template_email.html")
+
     # Monta o HTML com os dados
-    html_corpo = f"""
-    <html>
-      <body style="font-family:Arial,sans-serif; color:#333;">
-        <h2 style="margin-bottom:0.5em;">📥 Chamado #{id_chamado}</h2>
-        <h3 style="margin-bottom:0.25em;">📌 Título</h3>
-        <p style="margin:0 0 1em;">{titulo_chamado}</p>
+    with open(caminho_template, encoding="utf-8") as f:
+        template = f.read()
 
-        <h3 style="margin-bottom:0.25em;">🔗 Link</h3>
-        <p style="margin:0 0 1em;"><a href="{link_chamado}">{link_chamado}</a></p>
-
-        <h3 style="margin-bottom:0.25em;">📝 Descrição</h3>
-        <div style="background-color: #f9f9f9; padding:10px; border-radius:4px; border:1px solid #ddd; margin-bottom:1em;">
-          {paragrafos_html}
-        </div>
-
-        <h3 style="margin-bottom:0.25em;">🖼️ Imagens</h3>
-        {
+    imagens_html = (
         "".join(
             f'<p style="margin:0 0 1em;"><img src="cid:img{idx + 1}" style="max-width:600px;"/></p>'
             for idx in range(len(imagens))
         )
         or '<p style="margin:0 0 1em;">(nenhuma imagem)</p>'
+    )
+
+    dados_html = {
+        "id_chamado": id_chamado,
+        "titulo_chamado": titulo_chamado,
+        "link_chamado": link_chamado,
+        "paragrafos_html": paragrafos_html,
+        "imagens_html": imagens_html,
     }
-      </body>
-    </html>
-    """
+
+    html_corpo = template.format(**dados_html)
 
     # Criação da mensagem
     msg = MIMEMultipart("related")
