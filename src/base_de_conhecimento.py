@@ -12,7 +12,7 @@ def carregar_base_de_conhecimento():
     Carrega a base de conhecimento a partir de um arquivo JSON.
 
     Returns:
-        list: Lista de conhecimentos carregados do arquivo.
+        dict: Dicionário de sistemas e conhecimentos carregados do arquivo.
     """
     print("📚 Carregando base de conhecimento...")
     if getattr(sys, "frozen", False):
@@ -23,8 +23,11 @@ def carregar_base_de_conhecimento():
         caminho_base = os.path.join(
             os.path.dirname(__file__), "../data/base_de_conhecimentos.json"
         )
+
     with open(caminho_base, "r", encoding="utf-8") as file:
-        return json.load(file)["conhecimentos"]
+        base_conhecimento = json.load(file)
+
+    return base_conhecimento
 
 
 def normalize(text: str) -> str:
@@ -36,34 +39,39 @@ def normalize(text: str) -> str:
     return text
 
 
-def buscar_coincidencias(chamado: str, base_conhecimento: list) -> list:
+def buscar_coincidencias(chamado: str, base_conhecimento: dict) -> list:
     """
     Busca coincidências entre o chamado e a base de conhecimento,
     removendo acentos e pontuação, e casando palavras inteiras.
+    A base de conhecimento agora é um dicionário de sistemas.
     """
     resultados = []
     norm_chamado = normalize(chamado)
 
-    for item in base_conhecimento:
-        norm_palavras = [normalize(p) for p in item["palavras_chave"]]
-        coincidencias = 0
+    # Percorre os sistemas
+    for sistema, conhecimentos in base_conhecimento["sistemas"].items():
+        for item in conhecimentos:
+            norm_palavras = [normalize(p) for p in item["palavras_chave"]]
+            coincidencias = 0
 
-        for p in norm_palavras:
-            # regex \b para palavra inteira
-            if re.search(rf"\b{re.escape(p)}\b", norm_chamado):
-                coincidencias += 1
+            # Verifica as coincidências entre as palavras-chave e o chamado
+            for p in norm_palavras:
+                # regex \b para palavra inteira
+                if re.search(rf"\b{re.escape(p)}\b", norm_chamado):
+                    coincidencias += 1
 
-        # exige pelo menos 2 keywords diferentes
-        if coincidencias > 1:
-            resultados.append(
-                {
-                    "titulo": item["titulo"],
-                    "categoria": item["categoria"],
-                    "coincidencias": coincidencias,
-                }
-            )
+            # Exige pelo menos 2 palavras-chave diferentes
+            if coincidencias > 1:
+                resultados.append(
+                    {
+                        "titulo": item["titulo"],
+                        "categoria": item["categoria"],
+                        "coincidencias": coincidencias,
+                        "sistema": sistema,  # Inclui o sistema para referência
+                    }
+                )
 
-    # ordena quem teve mais coincidências no topo
+    # Ordena os resultados com mais coincidências no topo
     return sorted(resultados, key=lambda x: x["coincidencias"], reverse=True)
 
 
