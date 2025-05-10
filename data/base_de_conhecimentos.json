@@ -7,6 +7,11 @@
         "palavras_chave": ["liberação", "unidade operativa", "sig"]
       },
       {
+        "titulo": "Sem acesso ao portal do aluno",
+        "categoria": "sistemas > sig > permissoes",
+        "palavras_chave": ["acesso", "portal do aluno", "portal"]
+      },
+      {
         "titulo": "Criação de usuário no sistema SIG",
         "categoria": "sistemas > sig > criação de usuário",
         "palavras_chave": ["criação de usuário", "sig"]
